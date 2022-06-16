@@ -31,6 +31,7 @@ void Graph::BFS(int s)
     visited.resize(V, false); // marking every initial element as unvisited
 
     list<int> queue;
+    list<int>:: iterator it;
 
     visited[s] = true;
     queue.push_back(s);
@@ -41,12 +42,12 @@ void Graph::BFS(int s)
         cout << s << " "; // dequeuing a vertex from queue and printing it.
         queue.pop_front();
 
-        for (auto adjacent : adj[s])
+        for (it=adj[s].begin(); it!=adj[s].end(); it++)
         {
-            if (!visited[adjacent])
+            if (!visited[*it])
             {
-                visited[adjacent] = true;
-                queue.push_back(adjacent);
+                visited[*it] = true;
+                queue.push_back(*it);
             }
         }
     }
