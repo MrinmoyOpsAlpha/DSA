@@ -44,7 +44,7 @@ class Graph{
 
             //call the function to detect cycles
             for(int i=0;i<V;i++){
-                if(!visited[i]){                            //don't reccur for 'j' if already visited
+                if(!visited[i]){                            //don't reccur for 'i' if already visited
                     if( isCyclicUtil(i, visited, -1) ){
                         return true;
                     }
