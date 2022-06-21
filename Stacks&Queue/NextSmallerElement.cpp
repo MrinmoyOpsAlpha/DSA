@@ -1,40 +1,47 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void printNSE(int arr[], int n){
-    stack<pair<int, int>> s;
-    vector<int> ans(n);
+vector<int> printNSE(int arr[], int n){
+    stack<int> s;
+    vector<int> v;
 
-    for(int i=0;i<n;i++){
-        int next = arr[i];
-
-        if(s.empty()){
-            s.push({next,i});
-            continue;
+    for(int i=n-1;i>=0;i--){
+        if(s.size()==0){
+            v.push_back(-1);
         }
 
-        while(!s.empty() && s.top().first > next){
-            ans[s.top().second] = next;
-            s.pop();
+        else if(s.size() > 0 && s.top() < arr[i]){
+            v.push_back(s.top());
         }
 
-        s.push({next,i});
-    }
+        else if(s.size() > 0 && s.top()>=arr[i]){
+            while(s.size()>0 && s.top()>=arr[i]){
+                s.pop();
+            }
 
-    while (!s.empty()) {
-        ans[s.top().second] = -1;
-        s.pop();
-    }
+            if(s.size()==0){
+                v.push_back(-1);
+            }
 
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ---> " << ans[i] << endl;
+            else{
+                v.push_back(s.top());
+            }
+        }
+        s.push(arr[i]);
     }
+    reverse(v.begin(),v.end());
+    return v;
 }
 
 int main()
 {
-    int arr[] = {11, 13, 1, 3};
+    int arr[] = {11, 13, 21, 3};
     int n = sizeof(arr) / sizeof(arr[0]);
-    printNSE(arr, n);
+    vector<int> v = printNSE(arr, n);
+
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<"--->"<<v[i]<<endl;
+    }
+
     return 0;
 }
